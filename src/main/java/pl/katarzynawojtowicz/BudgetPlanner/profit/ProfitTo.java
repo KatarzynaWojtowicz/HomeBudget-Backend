@@ -2,7 +2,7 @@ package pl.katarzynawojtowicz.BudgetPlanner.profit;
 
 public class ProfitTo {
 	private String nazwa;
-	private String kwota;
+	private Float kwota;
 
 	public String getNazwa() {
 		return nazwa;
@@ -12,15 +12,15 @@ public class ProfitTo {
 		this.nazwa = nazwa;
 	}
 
-	public String getKwota() {
+	public Float getKwota() {
 		return kwota;
 	}
 
-	public void setKwota(String kwota) {
+	public void setKwota(Float kwota) {
 		this.kwota = kwota;
 	}
 
-	public ProfitTo(String nazwa, String kwota) {
+	public ProfitTo(String nazwa, float kwota) {
 		this.nazwa = nazwa;
 		this.kwota = kwota;
 	}

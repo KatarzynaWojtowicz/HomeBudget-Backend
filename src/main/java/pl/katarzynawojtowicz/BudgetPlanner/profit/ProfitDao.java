@@ -2,6 +2,7 @@ package pl.katarzynawojtowicz.BudgetPlanner.profit;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -19,15 +20,11 @@ public class ProfitDao {
 	}
 
 	private static String buildInsertSql(ProfitTo newProfit) {
-		String sql = "INSERT INTO profit (nazwa, kwota) VALUES (";
+		String sql = "INSERT INTO profit (nazwa) VALUES (";
 
 		List<String> insertParts = new ArrayList<>();
 		if (newProfit.getNazwa() != null) {
 			insertParts.add("'" + newProfit.getNazwa() + "'");
-		}
-
-		if (newProfit.getKwota() != null) {
-			insertParts.add(newProfit.getKwota().toString());
 		}
 
 		if (insertParts.size() > 0) {
@@ -52,5 +49,53 @@ public class ProfitDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static List<ProfitTo> findByParameters(String searchNazwa) {
+		String sql = buildSelectSql(searchNazwa);
+		return performSelect(sql);
+	}
+
+	private static String buildSelectSql(String searchNazwa) {
+		String sql = "SELECT id, nazwa, kwota FROM profit";
+
+		List<String> whereParts = new ArrayList<>();
+
+		if (searchNazwa != null) {
+			whereParts.add("nazwa = '" + searchNazwa + "'");
+		}
+
+		if (whereParts.size() > 0) {
+			String whereString = String.join(" AND ", whereParts);
+			sql += " WHERE " + whereString;
+		}
+		return sql;
+	}
+
+	private static List<ProfitTo> performSelect(String sql) {
+		Connection conn = null;
+		Statement stmt = null;
+		List<ProfitTo> result = new ArrayList<>();
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				String nazwa = rs.getString("nazwa");
+				Float kwota = rs.getFloat("kwota");
+
+				ProfitTo newProfit = new ProfitTo(nazwa, kwota);
+				result.add(newProfit);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
