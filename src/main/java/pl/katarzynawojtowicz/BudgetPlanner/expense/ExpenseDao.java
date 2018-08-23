@@ -59,7 +59,7 @@ public class ExpenseDao {
 			while (rs.next()) {
 				String wydatek = rs.getString("wydatek");
 				String kategoria = rs.getString("kategoria");
-				float cena = rs.getFloat("cena");
+				Float cena = rs.getFloat("cena");
 				String status = rs.getString("status");
 				Status s = Status.valueOf(status);
 
