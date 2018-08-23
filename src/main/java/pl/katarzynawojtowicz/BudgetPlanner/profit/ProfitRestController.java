@@ -9,17 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
+@RestController
+@RequestMapping("/profit")
 public class ProfitRestController {
 
-	@CrossOrigin
-	@RestController
-	@RequestMapping("/profit")
-	public class ExpenseRestController {
-
-		@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-		public ResponseEntity<Object> addNewProfit(@RequestBody ProfitTo newProfit) {
-			ProfitDao.addNewProfit(newProfit);
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
+	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> addNewProfit(@RequestBody ProfitTo newProfit) {
+		ProfitDao.addNewProfit(newProfit);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
