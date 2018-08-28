@@ -62,12 +62,11 @@ public class ProfitDao {
 		List<String> whereParts = new ArrayList<>();
 
 		if (searchNazwa != null) {
-			whereParts.add("nazwa = '" + searchNazwa + "'");
+			whereParts.add(" WHERE nazwa = '" + searchNazwa + "'");
 		}
 
 		if (whereParts.size() > 0) {
-			String whereString = String.join(" AND ", whereParts);
-			sql += " WHERE " + whereString;
+			sql += " WHERE " + whereParts;
 		}
 		return sql;
 	}
