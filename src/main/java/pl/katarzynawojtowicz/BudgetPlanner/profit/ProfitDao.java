@@ -57,17 +57,14 @@ public class ProfitDao {
 	}
 
 	private static String buildSelectSql(String searchNazwa) {
-		String sql = "SELECT id, nazwa, kwota FROM profit";
+		String sql = "SELECT idprofit, nazwa, kwota FROM profit";
 
-		List<String> whereParts = new ArrayList<>();
+		String whereString = " WHERE ";
 
 		if (searchNazwa != null) {
-			whereParts.add(" WHERE nazwa = '" + searchNazwa + "'");
+			sql += whereString + "nazwa = '" + searchNazwa + "'";
 		}
-
-		if (whereParts.size() > 0) {
-			sql += " WHERE " + whereParts;
-		}
+		System.out.println(sql);
 		return sql;
 	}
 
