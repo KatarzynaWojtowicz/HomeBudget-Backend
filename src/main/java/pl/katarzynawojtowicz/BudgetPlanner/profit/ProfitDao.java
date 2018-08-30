@@ -80,10 +80,11 @@ public class ProfitDao {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
+				long idprofit = rs.getLong("idprofit");
 				String nazwa = rs.getString("nazwa");
 				Float kwota = rs.getFloat("kwota");
 
-				ProfitTo newProfit = new ProfitTo(nazwa, kwota);
+				ProfitTo newProfit = new ProfitTo(idprofit, nazwa, kwota);
 				result.add(newProfit);
 			}
 			rs.close();

@@ -1,8 +1,17 @@
 package pl.katarzynawojtowicz.BudgetPlanner.profit;
 
 public class ProfitTo {
+	private long idprofit;
 	private String nazwa;
 	private Float kwota;
+
+	public long getIdprofit() {
+		return idprofit;
+	}
+
+	public void setIdprofit(long idprofit) {
+		this.idprofit = idprofit;
+	}
 
 	public String getNazwa() {
 		return nazwa;
@@ -20,7 +29,8 @@ public class ProfitTo {
 		this.kwota = kwota;
 	}
 
-	public ProfitTo(String nazwa, float kwota) {
+	public ProfitTo(long id, String nazwa, float kwota) {
+		this.idprofit = id;
 		this.nazwa = nazwa;
 		this.kwota = kwota;
 	}
