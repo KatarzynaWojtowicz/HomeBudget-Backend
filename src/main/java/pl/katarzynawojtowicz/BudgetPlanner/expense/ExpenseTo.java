@@ -1,10 +1,19 @@
 package pl.katarzynawojtowicz.BudgetPlanner.expense;
 
 public class ExpenseTo {
+	private long id;
 	private String nazwa;
 	private String kategoria;
 	private Float cena;
 	private Status status;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getNazwa() {
 		return nazwa;
@@ -38,8 +47,9 @@ public class ExpenseTo {
 		this.status = status;
 	}
 
-	public ExpenseTo(String nazwa, String kategoria, Float cena, Status status) {
+	public ExpenseTo(long id, String nazwa, String kategoria, Float cena, Status status) {
 		super();
+		this.id = id;
 		this.nazwa = nazwa;
 		this.kategoria = kategoria;
 		this.cena = cena;

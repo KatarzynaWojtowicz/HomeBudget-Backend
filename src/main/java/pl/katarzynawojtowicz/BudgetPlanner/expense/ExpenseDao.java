@@ -57,13 +57,14 @@ public class ExpenseDao {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
+				long id = rs.getLong("id");
 				String wydatek = rs.getString("wydatek");
 				String kategoria = rs.getString("kategoria");
 				Float cena = rs.getFloat("cena");
 				String status = rs.getString("status");
 				Status s = Status.valueOf(status);
 
-				ExpenseTo newExpense = new ExpenseTo(wydatek, kategoria, cena, s);
+				ExpenseTo newExpense = new ExpenseTo(id, wydatek, kategoria, cena, s);
 				result.add(newExpense);
 			}
 			rs.close();
