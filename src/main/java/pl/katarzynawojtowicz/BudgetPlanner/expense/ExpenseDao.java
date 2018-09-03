@@ -116,4 +116,23 @@ public class ExpenseDao {
 			e.printStackTrace();
 		}
 	}
+
+	public static void removeExpense(Long id) {
+		String sql = "DELETE FROM expense WHERE id =' " + id + "'";
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			stmt = conn.createStatement();
+			int resultAdded = stmt.executeUpdate(sql);
+			System.out.println(resultAdded);
+			stmt.close();
+			conn.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }
