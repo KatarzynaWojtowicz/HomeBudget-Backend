@@ -24,6 +24,64 @@ public class ExpenseDao {
 		addExpense(sql);
 	}
 
+	public static void removeExpense(Long id) {
+		String sql = "DELETE FROM expense WHERE id =' " + id + "'";
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			stmt = conn.createStatement();
+			int resultAdded = stmt.executeUpdate(sql);
+			System.out.println(resultAdded);
+			stmt.close();
+			conn.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void editExpense(ExpenseTo newExpense) {
+		String sql = "UPDATE expense SET ";
+
+		List<String> insertParts = new ArrayList<>();
+		if (newExpense.getNazwa() != null) {
+			insertParts.add("wydatek = '" + newExpense.getNazwa() + "'");
+		}
+		if (newExpense.getKategoria() != null) {
+			insertParts.add("kategoria = '" + newExpense.getKategoria() + "'");
+		}
+		if (newExpense.getCena() != null) {
+			insertParts.add("cena = " + newExpense.getCena().toString());
+		}
+		if (newExpense.getStatus() != null) {
+			insertParts.add("status = '" + newExpense.getStatus().toString() + "'");
+		}
+
+		if (insertParts.size() > 0) {
+			String insertString = String.join(", ", insertParts);
+			sql += insertString + " WHERE (id = '" + newExpense.getId() + "')";
+		}
+		System.out.println(sql);
+
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			stmt = conn.createStatement();
+			int resultAdded = stmt.executeUpdate(sql);
+			System.out.println(resultAdded);
+			stmt.close();
+			conn.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private static String buildSelectSql(Status searchStatus, String searchKategoria, String searchNazwa) {
 		String sql = "SELECT id, wydatek, kategoria, cena, status FROM expense";
 
@@ -100,25 +158,7 @@ public class ExpenseDao {
 		return sql;
 	}
 
-	public static void addExpense(String sql) {
-		Connection conn = null;
-		Statement stmt = null;
-		try {
-			Class.forName(JDBC_DRIVER);
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			stmt = conn.createStatement();
-			int resultAdded = stmt.executeUpdate(sql);
-			System.out.println(resultAdded);
-			stmt.close();
-			conn.close();
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public static void removeExpense(Long id) {
-		String sql = "DELETE FROM expense WHERE id =' " + id + "'";
+	private static void addExpense(String sql) {
 		Connection conn = null;
 		Statement stmt = null;
 		try {

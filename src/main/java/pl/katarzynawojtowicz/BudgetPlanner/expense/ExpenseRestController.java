@@ -38,4 +38,11 @@ public class ExpenseRestController {
 		ExpenseDao.removeExpense(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> edit(@PathVariable long id, @RequestBody ExpenseTo newExpense) {
+		ExpenseDao.editExpense(newExpense);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 }
