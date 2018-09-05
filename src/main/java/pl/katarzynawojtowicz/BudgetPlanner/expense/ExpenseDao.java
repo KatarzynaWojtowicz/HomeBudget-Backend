@@ -82,6 +82,38 @@ public class ExpenseDao {
 		}
 	}
 
+	public static ExpenseTo findById(Long id) {
+		String sql = "SELECT * FROM expense WHERE id = " + id;
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				String wydatek = rs.getString("wydatek");
+				String kategoria = rs.getString("kategoria");
+				Float cena = rs.getFloat("cena");
+				String status = rs.getString("status");
+				Status s = Status.valueOf(status);
+
+				ExpenseTo newExpense = new ExpenseTo(id, wydatek, kategoria, cena, s);
+				return newExpense;
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
 	private static String buildSelectSql(Status searchStatus, String searchKategoria, String searchNazwa) {
 		String sql = "SELECT id, wydatek, kategoria, cena, status FROM expense";
 

@@ -45,4 +45,10 @@ public class ExpenseRestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/details/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ExpenseTo> findById(@PathVariable long id) {
+		ExpenseTo result = ExpenseDao.findById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 }
