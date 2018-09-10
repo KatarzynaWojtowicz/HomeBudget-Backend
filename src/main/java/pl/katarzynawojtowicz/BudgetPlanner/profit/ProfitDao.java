@@ -64,7 +64,6 @@ public class ProfitDao {
 		if (searchNazwa != null) {
 			sql += whereString + "nazwa = '" + searchNazwa + "'";
 		}
-		System.out.println(sql);
 		return sql;
 	}
 
@@ -94,5 +93,85 @@ public class ProfitDao {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	public static void removeProfit(long id) {
+		String sql = "DELETE FROM profit WHERE idprofit = " + id;
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			stmt = conn.createStatement();
+			int resultAdded = stmt.executeUpdate(sql);
+			System.out.println(resultAdded);
+			stmt.close();
+			conn.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void editProfit(ProfitTo newProfit) {
+		String sql = "UPDATE profit SET ";
+
+		List<String> insertParts = new ArrayList<>();
+		if (newProfit.getNazwa() != null) {
+			insertParts.add("nazwa = '" + newProfit.getNazwa() + "'");
+		}
+
+		if (newProfit.getKwota() != null) {
+			insertParts.add("kwota = " + newProfit.getKwota().toString());
+		}
+
+		if (insertParts.size() > 0) {
+			String insertString = String.join(", ", insertParts);
+			sql += insertString + " WHERE (idprofit = '" + newProfit.getIdprofit() + "')";
+		}
+
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			stmt = conn.createStatement();
+			int resultAdded = stmt.executeUpdate(sql);
+			System.out.println(resultAdded);
+			stmt.close();
+			conn.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public static ProfitTo findById(long id) {
+		String sql = "SELECT * FROM profit WHERE idprofit = " + id;
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				String nazwa = rs.getString("nazwa");
+				Float kwota = rs.getFloat("kwota");
+				ProfitTo newProfit = new ProfitTo(id, nazwa, kwota);
+				return newProfit;
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }
