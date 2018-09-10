@@ -1,6 +1,6 @@
 package pl.katarzynawojtowicz.BudgetPlanner.expense;
 
 public enum Status {
-	WYKONANY, ZAPLANOWANY, ODŁOŻONY;
+	WYKONANY, ZAPLANOWANY, ODLOZONY;
 
 }
