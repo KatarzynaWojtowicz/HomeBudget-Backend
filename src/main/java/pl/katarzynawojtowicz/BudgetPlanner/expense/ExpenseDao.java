@@ -25,7 +25,7 @@ public class ExpenseDao {
 	}
 
 	public static void removeExpense(Long id) {
-		String sql = "DELETE FROM expense WHERE id =' " + id + "'";
+		String sql = "DELETE FROM expense WHERE id = " + id;
 		Connection conn = null;
 		Statement stmt = null;
 		try {
