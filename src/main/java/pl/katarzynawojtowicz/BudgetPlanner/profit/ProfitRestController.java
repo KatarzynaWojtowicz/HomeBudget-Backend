@@ -31,7 +31,7 @@ public class ProfitRestController {
 		return new ResponseEntity<>(searchByStatus, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> remove(@PathVariable long id) {
 		ProfitDao.removeProfit(id);
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -43,7 +43,7 @@ public class ProfitRestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/details/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/details/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProfitTo> findById(@PathVariable long id) {
 		ProfitTo result = ProfitDao.findById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
