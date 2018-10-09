@@ -20,11 +20,14 @@ public class ProfitDao {
 	}
 
 	private static String buildInsertSql(ProfitTo newProfit) {
-		String sql = "INSERT INTO profit (nazwa) VALUES (";
+		String sql = "INSERT INTO profit (nazwa, kwota) VALUES (";
 
 		List<String> insertParts = new ArrayList<>();
 		if (newProfit.getNazwa() != null) {
 			insertParts.add("'" + newProfit.getNazwa() + "'");
+		}
+		if (newProfit.getKwota() != null) {
+			insertParts.add("kwota = " + newProfit.getKwota().toString());
 		}
 
 		if (insertParts.size() > 0) {
