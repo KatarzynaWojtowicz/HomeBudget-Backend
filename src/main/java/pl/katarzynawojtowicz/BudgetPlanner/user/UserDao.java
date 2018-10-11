@@ -19,7 +19,7 @@ public class UserDao {
 	}
 
 	private static String buildInsertSql(UserTo newUser) {
-		String sql = "INSERT INTO user (login, password) VALUES (";
+		String sql = "INSERT INTO user (login, password, email) VALUES (";
 
 		List<String> insertParts = new ArrayList<>();
 		if (newUser.getLogin() != null) {
@@ -27,6 +27,10 @@ public class UserDao {
 		}
 		if (newUser.getPassword() != null) {
 			insertParts.add("'" + newUser.getPassword() + "'");
+		}
+
+		if (newUser.getEmail() != null) {
+			insertParts.add("'" + newUser.getEmail() + "'");
 		}
 
 		if (insertParts.size() > 0) {

@@ -4,6 +4,7 @@ public class UserTo {
 	private long id;
 	private String login;
 	private String password;
+	private String email;
 
 	public long getId() {
 		return id;
@@ -29,6 +30,10 @@ public class UserTo {
 		this.password = password;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
 	public UserTo(long id, String login, String password) {
 		super();
 		this.id = id;
@@ -38,6 +43,10 @@ public class UserTo {
 
 	public UserTo() {
 		super();
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
