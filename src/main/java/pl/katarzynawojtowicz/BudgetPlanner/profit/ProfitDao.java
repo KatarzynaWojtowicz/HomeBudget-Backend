@@ -27,7 +27,7 @@ public class ProfitDao {
 			insertParts.add("'" + newProfit.getNazwa() + "'");
 		}
 		if (newProfit.getKwota() != null) {
-			insertParts.add("kwota = " + newProfit.getKwota().toString());
+			insertParts.add(newProfit.getKwota().toString());
 		}
 
 		if (insertParts.size() > 0) {
