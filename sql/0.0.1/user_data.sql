@@ -1,3 +1,3 @@
-INSERT INTO user(login, password, email) VALUES ('Kasia','hasloKasi','kasia@gmail.com');
-INSERT INTO user(login, password, email) VALUES ('Madzia','hasloMadzi','madzia@gmail.com');
-INSERT INTO user(login, password, email) VALUES ('Benek','hasloBenka','benek@gmail.com');
+INSERT INTO user (active,email,last_name,name,password) VALUES (0,'kasia@gmail.com','Jurczak','Kasia','hasloKasi');
+INSERT INTO user (active,email,last_name,name,password) VALUES (1,'iguanaiza@gmail.com','Iguana','Iza','hasloIzy');
+INSERT INTO user (active,email,last_name,name,password) VALUES (1,'benek@gmail.com','Benek','Benek','hasloBenka');
