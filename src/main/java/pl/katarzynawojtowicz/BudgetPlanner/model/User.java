@@ -20,7 +20,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
+	@Column(name = "id")
 	private int id;
 
 	@Column(name = "email")
@@ -39,7 +39,7 @@ public class User {
 	private boolean active;;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id_user"))
 	private Set<Role> roles;
 
 	public User() {
