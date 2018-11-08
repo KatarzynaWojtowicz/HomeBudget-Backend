@@ -27,12 +27,13 @@ public class LoginRestController {
 		return "Hello";
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('Admin')")
 	@GetMapping("/secured/all")
 	public String securedHello() {
 		return "Secured Hello";
 	}
 
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/secured/alternate")
 	public String alternate() {
 		return "alternate";
