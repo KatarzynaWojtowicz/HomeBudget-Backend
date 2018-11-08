@@ -41,3 +41,5 @@ CREATE TABLE user_role (
  );
 
  
+INSERT INTO role (role) VALUES ('ADMIN');
+INSERT INTO role (role) VALUES ('USER');

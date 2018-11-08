@@ -1,5 +1,4 @@
 /* user_data*/
-
 INSERT INTO user (active,email,last_name,name,password) VALUES (0,'kasia@gmail.com','Jurczak','Kasia','hasloKasi');
 INSERT INTO user (active,email,last_name,name,password) VALUES (1,'iguanaiza@gmail.com','Iguana','Iza','hasloIzy');
 INSERT INTO user (active,email,last_name,name,password) VALUES (1,'benek@gmail.com','Benek','Benek','hasloBenka');
@@ -33,11 +32,9 @@ INSERT INTO profit(nazwa, kwota)
 VALUES ('Wplata za sprzedaz auta', '4500.00');
 
 
-/*role_data*/
-
-INSERT INTO role (role) VALUES ('Admin');
-
 
 /*user-role-data*/
 
-INSERT INTO user_role (id_user, id_role) VALUES ((SELECT id FROM user WHERE name = 'Benek'), (SELECT id FROM role WHERE role = 'Admin'));
+INSERT INTO user_role (id_user, id_role) VALUES ((SELECT id FROM user WHERE name = 'Benek'), (SELECT id FROM role WHERE role = 'ADMIN'));
+INSERT INTO user_role (id_user, id_role) VALUES ((SELECT id FROM user WHERE name = 'Iza'), (SELECT id FROM role WHERE role = 'USER'));
+INSERT INTO user_role (id_user, id_role) VALUES ((SELECT id FROM user WHERE name = 'Kasia'), (SELECT id FROM role WHERE role = 'USER'));
