@@ -14,13 +14,13 @@ public class ProfitDao {
 	private static final String USER = "user";
 	private static final String PASS = "password";
 
-	public static void addNewProfit(ProfitTo newProfit) {
-		String sql = buildInsertSql(newProfit);
+	public static void addNewProfit(ProfitTo newProfit, int userId) {
+		String sql = buildInsertSql(newProfit, userId);
 		addProfit(sql);
 	}
 
-	private static String buildInsertSql(ProfitTo newProfit) {
-		String sql = "INSERT INTO profit (nazwa, kwota) VALUES (";
+	private static String buildInsertSql(ProfitTo newProfit, int userId) {
+		String sql = "INSERT INTO profit (nazwa, kwota, id_user) VALUES (";
 
 		List<String> insertParts = new ArrayList<>();
 		if (newProfit.getNazwa() != null) {
@@ -30,6 +30,7 @@ public class ProfitDao {
 			insertParts.add(newProfit.getKwota().toString());
 		}
 
+		insertParts.add(String.valueOf(userId));
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);
 			sql += insertString + ");";
@@ -54,19 +55,20 @@ public class ProfitDao {
 		}
 	}
 
-	public static List<ProfitTo> findByParameters(String searchNazwa) {
-		String sql = buildSelectSql(searchNazwa);
+	public static List<ProfitTo> findByParameters(String searchNazwa, int userId) {
+		String sql = buildSelectSql(searchNazwa, userId);
 		return performSelect(sql);
 	}
 
-	private static String buildSelectSql(String searchNazwa) {
+	private static String buildSelectSql(String searchNazwa, int userId) {
 		String sql = "SELECT idprofit, nazwa, kwota FROM profit";
 
-		String whereString = " WHERE ";
+		String whereString = " WHERE id_user = " + userId;
 
 		if (searchNazwa != null) {
-			sql += whereString + "nazwa = '" + searchNazwa + "'";
+			sql += whereString + " AND nazwa = '" + searchNazwa + "'";
 		}
+
 		return sql;
 	}
 
@@ -98,8 +100,8 @@ public class ProfitDao {
 		return result;
 	}
 
-	public static void removeProfit(long id) {
-		String sql = "DELETE FROM profit WHERE idprofit = " + id;
+	public static void removeProfit(long id, int userId) {
+		String sql = "DELETE FROM profit WHERE idprofit = " + id + " WHERE id_user = " + userId;
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -116,7 +118,7 @@ public class ProfitDao {
 		}
 	}
 
-	public static void editProfit(ProfitTo newProfit) {
+	public static void editProfit(ProfitTo newProfit, int userId) {
 		String sql = "UPDATE profit SET ";
 
 		List<String> insertParts = new ArrayList<>();
@@ -130,7 +132,7 @@ public class ProfitDao {
 
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);
-			sql += insertString + " WHERE (idprofit = '" + newProfit.getIdprofit() + "')";
+			sql += insertString + " WHERE (idprofit = '" + newProfit.getIdprofit() + "' AND id_user = " + userId + ")";
 		}
 
 		Connection conn = null;
@@ -151,8 +153,8 @@ public class ProfitDao {
 
 	}
 
-	public static ProfitTo findById(long id) {
-		String sql = "SELECT * FROM profit WHERE idprofit = " + id;
+	public static ProfitTo findById(long id, int userId) {
+		String sql = "SELECT * FROM profit WHERE idprofit = " + id + " AND id_user = " + userId + ")";
 		Connection conn = null;
 		Statement stmt = null;
 		try {
