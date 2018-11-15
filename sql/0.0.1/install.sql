@@ -5,13 +5,17 @@ CREATE TABLE expense(
 	wydatek varchar(256),
     kategoria varchar(256),
     cena float(9,2),
-    status varchar(32)
+    status varchar(32),
+	id_user int NOT NULL,
+	FOREIGN KEY (id_user) REFERENCES user(id)
 );
 
 CREATE TABLE profit (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nazwa VARCHAR(256) NOT NULL,
-  kwota FLOAT(9,2) NOT NULL
+  kwota FLOAT(9,2) NOT NULL,
+  id_user int NOT NULL,
+  FOREIGN KEY (id_user) REFERENCES user(id)
  );
 
  
