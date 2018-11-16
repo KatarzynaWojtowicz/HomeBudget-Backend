@@ -132,7 +132,7 @@ public class ProfitDao {
 
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);
-			sql += insertString + " WHERE (idprofit = '" + newProfit.getIdprofit() + "' AND id_user = " + userId + ")";
+			sql += insertString + " WHERE (idprofit = '" + newProfit.getIdprofit() + "' AND id_user = " + userId + ");";
 		}
 
 		Connection conn = null;

@@ -14,18 +14,19 @@ public class ExpenseDao {
 	private static final String USER = "user";
 	private static final String PASS = "password";
 
-	public static List<ExpenseTo> findByParameters(Status searchStatus, String searchKategoria, String searchNazwa) {
-		String sql = buildSelectSql(searchStatus, searchKategoria, searchNazwa);
+	public static List<ExpenseTo> findByParameters(Status searchStatus, String searchKategoria, String searchNazwa,
+			int userId) {
+		String sql = buildSelectSql(searchStatus, searchKategoria, searchNazwa, userId);
 		return performSelect(sql);
 	}
 
-	public static void addNewExpense(ExpenseTo newExpense) {
-		String sql = buildInsertSql(newExpense);
+	public static void addNewExpense(ExpenseTo newExpense, int userId) {
+		String sql = buildInsertSql(newExpense, userId);
 		addExpense(sql);
 	}
 
-	public static void removeExpense(Long id) {
-		String sql = "DELETE FROM expense WHERE id = " + id;
+	public static void removeExpense(Long id, int userId) {
+		String sql = "DELETE FROM expense WHERE id = " + id + " AND id_user = " + userId + ";";
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -42,7 +43,7 @@ public class ExpenseDao {
 		}
 	}
 
-	public static void editExpense(ExpenseTo newExpense) {
+	public static void editExpense(ExpenseTo newExpense, int userId) {
 		String sql = "UPDATE expense SET ";
 
 		List<String> insertParts = new ArrayList<>();
@@ -61,7 +62,7 @@ public class ExpenseDao {
 
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);
-			sql += insertString + " WHERE (id = '" + newExpense.getId() + "')";
+			sql += insertString + " WHERE (id = '" + newExpense.getId() + "' AND id_user = " + userId + ");";
 		}
 		System.out.println(sql);
 
@@ -82,8 +83,8 @@ public class ExpenseDao {
 		}
 	}
 
-	public static ExpenseTo findById(Long id) {
-		String sql = "SELECT * FROM expense WHERE id = " + id;
+	public static ExpenseTo findById(Long id, int userId) {
+		String sql = "SELECT * FROM expense WHERE id = " + id + "' AND id_user = " + userId + ");";
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -114,10 +115,11 @@ public class ExpenseDao {
 
 	}
 
-	private static String buildSelectSql(Status searchStatus, String searchKategoria, String searchNazwa) {
+	private static String buildSelectSql(Status searchStatus, String searchKategoria, String searchNazwa, int userId) {
 		String sql = "SELECT id, wydatek, kategoria, cena, status FROM expense";
 
 		List<String> whereParts = new ArrayList<>();
+
 		if (searchStatus != null) {
 			whereParts.add("status = '" + searchStatus.toString() + "'");
 		}
@@ -127,6 +129,7 @@ public class ExpenseDao {
 		if (searchNazwa != null) {
 			whereParts.add("wydatek = '" + searchNazwa + "'");
 		}
+		whereParts.add("id_user = " + userId);
 
 		if (whereParts.size() > 0) {
 			String whereString = String.join(" AND ", whereParts);
@@ -166,8 +169,8 @@ public class ExpenseDao {
 		return result;
 	}
 
-	private static String buildInsertSql(ExpenseTo newExpense) {
-		String sql = "INSERT INTO expense (wydatek, kategoria, cena, status) VALUES (";
+	private static String buildInsertSql(ExpenseTo newExpense, int userId) {
+		String sql = "INSERT INTO expense (wydatek, kategoria, cena, status, id_user) VALUES (";
 
 		List<String> insertParts = new ArrayList<>();
 		if (newExpense.getNazwa() != null) {
@@ -182,7 +185,7 @@ public class ExpenseDao {
 		if (newExpense.getStatus() != null) {
 			insertParts.add("'" + newExpense.getStatus().toString() + "'");
 		}
-
+		insertParts.add(String.valueOf(userId));
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);
 			sql += insertString + ");";
