@@ -1,5 +1,6 @@
 package pl.katarzynawojtowicz.BudgetPlanner.expense;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -7,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.katarzynawojtowicz.BudgetPlanner.model.CustomUserDetails;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/expense")
 public class ExpenseRestController {
@@ -27,9 +26,11 @@ public class ExpenseRestController {
 	public ResponseEntity<List<ExpenseTo>> getFindByStatus(
 			@RequestParam(value = "status", required = false) Status status,
 			@RequestParam(value = "kategoria", required = false) String kategoria,
-			@RequestParam(value = "nazwa", required = false) String nazwa) {
+			@RequestParam(value = "nazwa", required = false) String nazwa,
+			@RequestParam(value = "data-wydatku", required = false) Date dataWydatku) {
 		CustomUserDetails userDetails = getUserDetails();
-		List<ExpenseTo> searchByStatus = ExpenseDao.findByParameters(status, kategoria, nazwa, userDetails.getId());
+		List<ExpenseTo> searchByStatus = ExpenseDao.findByParameters(status, kategoria, nazwa, dataWydatku,
+				userDetails.getId());
 		return new ResponseEntity<>(searchByStatus, HttpStatus.OK);
 	}
 

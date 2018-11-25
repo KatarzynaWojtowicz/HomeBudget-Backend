@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ExpenseDao {
@@ -15,8 +16,9 @@ public class ExpenseDao {
 	private static final String PASS = "password";
 
 	public static List<ExpenseTo> findByParameters(Status searchStatus, String searchKategoria, String searchNazwa,
+			Date dataWydatku,
 			int userId) {
-		String sql = buildSelectSql(searchStatus, searchKategoria, searchNazwa, userId);
+		String sql = buildSelectSql(searchStatus, searchKategoria, searchNazwa, dataWydatku, userId);
 		return performSelect(sql);
 	}
 
@@ -59,6 +61,9 @@ public class ExpenseDao {
 		if (newExpense.getStatus() != null) {
 			insertParts.add("status = '" + newExpense.getStatus().toString() + "'");
 		}
+		if (newExpense.getDataWydatku() != null) {
+			insertParts.add("data_wydatku = '" + newExpense.getDataWydatku().toString());
+		}
 
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);
@@ -100,8 +105,9 @@ public class ExpenseDao {
 				Float cena = rs.getFloat("cena");
 				String status = rs.getString("status");
 				Status s = Status.valueOf(status);
+				Date dataWydatku = rs.getDate("data_wydatku");
 
-				ExpenseTo newExpense = new ExpenseTo(id, wydatek, kategoria, cena, s);
+				ExpenseTo newExpense = new ExpenseTo(id, wydatek, kategoria, cena, s, dataWydatku);
 				return newExpense;
 			}
 			rs.close();
@@ -115,8 +121,9 @@ public class ExpenseDao {
 
 	}
 
-	private static String buildSelectSql(Status searchStatus, String searchKategoria, String searchNazwa, int userId) {
-		String sql = "SELECT id, wydatek, kategoria, cena, status FROM expense";
+	private static String buildSelectSql(Status searchStatus, String searchKategoria, String searchNazwa,
+			Date dataWydatku, int userId) {
+		String sql = "SELECT id, wydatek, kategoria, cena, status, data_wydatku FROM expense";
 
 		List<String> whereParts = new ArrayList<>();
 
@@ -128,6 +135,9 @@ public class ExpenseDao {
 		}
 		if (searchNazwa != null) {
 			whereParts.add("wydatek = '" + searchNazwa + "'");
+		}
+		if (dataWydatku != null) {
+			whereParts.add("data_wydatku = '" + dataWydatku + "'");
 		}
 		whereParts.add("id_user = " + userId);
 
@@ -156,8 +166,9 @@ public class ExpenseDao {
 				Float cena = rs.getFloat("cena");
 				String status = rs.getString("status");
 				Status s = Status.valueOf(status);
+				Date dataWydatku = rs.getDate("data_wydatku");
 
-				ExpenseTo newExpense = new ExpenseTo(id, wydatek, kategoria, cena, s);
+				ExpenseTo newExpense = new ExpenseTo(id, wydatek, kategoria, cena, s, dataWydatku);
 				result.add(newExpense);
 			}
 			rs.close();
@@ -170,7 +181,7 @@ public class ExpenseDao {
 	}
 
 	private static String buildInsertSql(ExpenseTo newExpense, int userId) {
-		String sql = "INSERT INTO expense (wydatek, kategoria, cena, status, id_user) VALUES (";
+		String sql = "INSERT INTO expense (wydatek, kategoria, cena, status, data_wydatku, id_user) VALUES (";
 
 		List<String> insertParts = new ArrayList<>();
 		if (newExpense.getNazwa() != null) {
@@ -185,6 +196,11 @@ public class ExpenseDao {
 		if (newExpense.getStatus() != null) {
 			insertParts.add("'" + newExpense.getStatus().toString() + "'");
 		}
+
+		if (newExpense.getDataWydatku() != null) {
+			insertParts.add("'" + newExpense.getDataWydatku().toString() + "'");
+		}
+
 		insertParts.add(String.valueOf(userId));
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProfitDao {
@@ -20,7 +21,7 @@ public class ProfitDao {
 	}
 
 	private static String buildInsertSql(ProfitTo newProfit, int userId) {
-		String sql = "INSERT INTO profit (nazwa, kwota, id_user) VALUES (";
+		String sql = "INSERT INTO profit (nazwa, kwota, data_przychodu, id_user) VALUES (";
 
 		List<String> insertParts = new ArrayList<>();
 		if (newProfit.getNazwa() != null) {
@@ -28,6 +29,9 @@ public class ProfitDao {
 		}
 		if (newProfit.getKwota() != null) {
 			insertParts.add(newProfit.getKwota().toString());
+		}
+		if (newProfit.getDataPrzychodu() != null) {
+			insertParts.add(newProfit.getDataPrzychodu().toString());
 		}
 
 		insertParts.add(String.valueOf(userId));
@@ -61,7 +65,7 @@ public class ProfitDao {
 	}
 
 	private static String buildSelectSql(String searchNazwa, int userId) {
-		String sql = "SELECT idprofit, nazwa, kwota FROM profit";
+		String sql = "SELECT idprofit, nazwa, kwota, data_przychodu FROM profit";
 
 		String whereString = " WHERE id_user = " + userId;
 
@@ -87,8 +91,9 @@ public class ProfitDao {
 				long idprofit = rs.getLong("idprofit");
 				String nazwa = rs.getString("nazwa");
 				Float kwota = rs.getFloat("kwota");
+				Date dataPrzychodu = rs.getDate("data_przychodu");
 
-				ProfitTo newProfit = new ProfitTo(idprofit, nazwa, kwota);
+				ProfitTo newProfit = new ProfitTo(idprofit, nazwa, kwota, dataPrzychodu);
 				result.add(newProfit);
 			}
 			rs.close();
@@ -130,6 +135,10 @@ public class ProfitDao {
 			insertParts.add("kwota = " + newProfit.getKwota().toString());
 		}
 
+		if (newProfit.getDataPrzychodu() != null) {
+			insertParts.add("data_przychodu = '" + newProfit.getDataPrzychodu().toString());
+		}
+
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);
 			sql += insertString + " WHERE (idprofit = '" + newProfit.getIdprofit() + "' AND id_user = " + userId + ");";
@@ -167,7 +176,8 @@ public class ProfitDao {
 			while (rs.next()) {
 				String nazwa = rs.getString("nazwa");
 				Float kwota = rs.getFloat("kwota");
-				ProfitTo newProfit = new ProfitTo(id, nazwa, kwota);
+				Date dataPrzychodu = rs.getDate("data_przychodu");
+				ProfitTo newProfit = new ProfitTo(id, nazwa, kwota, dataPrzychodu);
 				return newProfit;
 			}
 			rs.close();
