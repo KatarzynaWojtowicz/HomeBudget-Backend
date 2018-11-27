@@ -3,11 +3,11 @@ CREATE SCHEMA homebudget;
  CREATE TABLE user (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   active boolean NOT NULL,
-  email VARCHAR(256) NOT NULL,
-  last_name VARCHAR(256) NOT NULL,
   name VARCHAR(256) NOT NULL,
-  password VARCHAR(64) NOT NULL
-  
+  last_name VARCHAR(256) NOT NULL,
+  login VARCHAR(256) NOT NULL,
+  password VARCHAR(64) NOT NULL,
+  email VARCHAR(256) NOT NULL
   );
   
 
