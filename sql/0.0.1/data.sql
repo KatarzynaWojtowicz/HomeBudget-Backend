@@ -7,16 +7,23 @@ INSERT INTO user (active,name,last_name,login,password,email) VALUES (1,'Benek',
 /*expense_data*/
 
 INSERT INTO expense(wydatek, kategoria, cena, status, data_wydatku, id_user) 
-VALUES ('Paliwo', 'Samochod', 49.98, 'WYKONANY', '2018-10-10', (SELECT id FROM user WHERE login = 'Benek1'));
+VALUES ('Paliwo', 'Samochod', 300.98, 'WYKONANY', '2018-10-10', (SELECT id FROM user WHERE login = 'Benek1'));
 
 INSERT INTO expense(wydatek, kategoria, cena, status, data_wydatku, id_user) 
-VALUES ('Biurko', 'Dom', 320.00, 'WYKONANY', '2018-10-10', (SELECT id FROM user WHERE login = 'Benek1'));
+VALUES ('Rachunki', 'Dom', 620.00, 'WYKONANY', '2018-10-10', (SELECT id FROM user WHERE login = 'Benek1'));
 
 INSERT INTO expense(wydatek, kategoria, cena, status, data_wydatku, id_user) 
-VALUES ('Trociny', 'Zwierzatko', 4.60, 'ZAPLANOWANY', '2018-11-24', (SELECT id FROM user WHERE login = 'Benek1'));
+VALUES ('Kredyt', 'Dom', 1200.00, 'WYKONANY', '2018-10-10', (SELECT id FROM user WHERE login = 'Benek1'));
+
+INSERT INTO expense(wydatek, kategoria, cena, status, data_wydatku, id_user) 
+VALUES ('Zakupy', 'Dom', 1000.00, 'WYKONANY', '2018-10-10', (SELECT id FROM user WHERE login = 'Benek1'));  
+
+
+INSERT INTO expense(wydatek, kategoria, cena, status, data_wydatku, id_user) 
+VALUES ('Telefon', 'Telefon', 30.00, 'ZAPLANOWANY', '2018-11-24', (SELECT id FROM user WHERE login = 'Benek1'));
 
 INSERT INTO expense(wydatek, kategoria, cena, status, data_wydatku, id_user ) 
-VALUES ('Nakladka na toalete', 'Dziecko', 19.99, 'WYKONANY', '2018-01-15', (SELECT id FROM user WHERE login = 'Benek1'));
+VALUES ('Przedszkole', 'Dziecko', 750.00, 'WYKONANY', '2018-01-15', (SELECT id FROM user WHERE login = 'Benek1'));
 
 INSERT INTO expense(wydatek, kategoria, cena, status, data_wydatku, id_user) 
 VALUES ('Mleko', 'Dziecko', 19.99, 'WYKONANY', '2018-01-15', (SELECT id FROM user WHERE login = 'Iza1'));
@@ -49,17 +56,14 @@ INSERT INTO profit(nazwa, kwota, data_przychodu, id_user)
 VALUES ('Prezent od mamy', '200.00', '2018-10-12',(SELECT id FROM user WHERE login = 'Benek1'));
 
 INSERT INTO profit(nazwa, kwota, data_przychodu, id_user)
-VALUES ('Wyplata', '1500.00', '2018-12-12',(SELECT id FROM user WHERE login = 'Benek1'));
+VALUES ('Wyplata', '6500.00', '2018-12-12',(SELECT id FROM user WHERE login = 'Benek1'));
 
 
 INSERT INTO profit(nazwa, kwota, data_przychodu, id_user)
-VALUES ('Wplata za sprzedaz auta', '4500.00', '2018-09-02',(SELECT id FROM user WHERE login = 'Benek1'));
+VALUES ('Premia', '100.00', '2018-09-02',(SELECT id FROM user WHERE login = 'Benek1'));
 
 INSERT INTO profit(nazwa, kwota, data_przychodu, id_user)
 VALUES ('Prezent od taty', '200.00', '2018-01-19',(SELECT id FROM user WHERE login = 'Benek1'));
-
-INSERT INTO profit(nazwa, kwota, data_przychodu, id_user)
-VALUES ('Premia', '200.00', '2018-07-13',(SELECT id FROM user WHERE login = 'Benek1'));
 
 INSERT INTO profit(nazwa, kwota, data_przychodu, id_user)
 VALUES ('Nagroda pracownika roku', '10000.00', '2018-08-20',(SELECT id FROM user WHERE login = 'Iza1'));
