@@ -1,4 +1,4 @@
-package pl.katarzynawojtowicz.BudgetPlanner.register;
+package pl.katarzynawojtowicz.BudgetPlanner.user;
 
 public class RegisterTo {
 	private String name;
