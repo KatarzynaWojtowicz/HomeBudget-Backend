@@ -1,4 +1,4 @@
-package pl.katarzynawojtowicz.BudgetPlanner.login;
+package pl.katarzynawojtowicz.BudgetPlanner.user;
 
 public class LoginTo {
 	private String userName;

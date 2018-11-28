@@ -65,12 +65,12 @@ public class ProfitDao {
 	}
 
 	private static String buildSelectSql(String searchNazwa, int userId) {
-		String sql = "SELECT idprofit, nazwa, kwota, data_przychodu FROM profit";
+		String sql = "SELECT id, nazwa, kwota, data_przychodu FROM profit";
 
-		String whereString = " WHERE id_user = " + userId;
+		sql += " WHERE id_user = " + userId;
 
 		if (searchNazwa != null) {
-			sql += whereString + " AND nazwa = '" + searchNazwa + "'";
+			sql += " AND nazwa = '" + searchNazwa + "'";
 		}
 
 		return sql;
@@ -88,7 +88,7 @@ public class ProfitDao {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
-				long idprofit = rs.getLong("idprofit");
+				long idprofit = rs.getLong("id");
 				String nazwa = rs.getString("nazwa");
 				Float kwota = rs.getFloat("kwota");
 				Date dataPrzychodu = rs.getDate("data_przychodu");
@@ -106,7 +106,7 @@ public class ProfitDao {
 	}
 
 	public static void removeProfit(long id, int userId) {
-		String sql = "DELETE FROM profit WHERE idprofit = " + id + " WHERE id_user = " + userId;
+		String sql = "DELETE FROM profit WHERE id = " + id + " WHERE id_user = " + userId;
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -141,7 +141,7 @@ public class ProfitDao {
 
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);
-			sql += insertString + " WHERE (idprofit = '" + newProfit.getIdprofit() + "' AND id_user = " + userId + ");";
+			sql += insertString + " WHERE (id = '" + newProfit.getIdprofit() + "' AND id_user = " + userId + ");";
 		}
 
 		Connection conn = null;
@@ -163,7 +163,7 @@ public class ProfitDao {
 	}
 
 	public static ProfitTo findById(long id, int userId) {
-		String sql = "SELECT * FROM profit WHERE idprofit = " + id + " AND id_user = " + userId + ")";
+		String sql = "SELECT * FROM profit WHERE id = " + id + " AND id_user = " + userId + ")";
 		Connection conn = null;
 		Statement stmt = null;
 		try {

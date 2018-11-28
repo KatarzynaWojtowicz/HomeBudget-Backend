@@ -14,9 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserRestController {
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> addNewUser(@RequestBody UserTo newUser) {
-		UserDao.addNewUser(newUser);
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> addNewUser(@RequestBody RegisterTo newRegister) {
+		UserDao.addNewUser(newRegister);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> login(@RequestBody LoginTo newLogin) {
+		UserDao.login(newLogin);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 }
