@@ -1,5 +1,7 @@
 package pl.katarzynawojtowicz.BudgetPlanner.expense;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +29,11 @@ public class ExpenseRestController {
 			@RequestParam(value = "status", required = false) Status status,
 			@RequestParam(value = "kategoria", required = false) String kategoria,
 			@RequestParam(value = "nazwa", required = false) String nazwa,
-			@RequestParam(value = "data-wydatku", required = false) Date dataWydatku) {
+			@RequestParam(value = "data-wydatku", required = false) String dataWydatku) throws ParseException {
+
+		Date date = dataWydatku != null ? new SimpleDateFormat("dd.MM.yyyy").parse(dataWydatku) : null;
 		CustomUserDetails userDetails = getUserDetails();
-		List<ExpenseTo> searchByStatus = ExpenseDao.findByParameters(status, kategoria, nazwa, dataWydatku,
+		List<ExpenseTo> searchByStatus = ExpenseDao.findByParameters(status, kategoria, nazwa, date,
 				userDetails.getId());
 		return new ResponseEntity<>(searchByStatus, HttpStatus.OK);
 	}
@@ -37,33 +41,41 @@ public class ExpenseRestController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> addNewExpense(@RequestBody ExpenseTo newExpense) {
+
 		CustomUserDetails userDetails = getUserDetails();
 		ExpenseDao.addNewExpense(newExpense, userDetails.getId());
 		return new ResponseEntity<>(HttpStatus.OK);
+
 	}
 
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Object> remove(@PathVariable long id) {
+
 		CustomUserDetails userDetails = getUserDetails();
 		ExpenseDao.removeExpense(id, userDetails.getId());
 		return new ResponseEntity<>(HttpStatus.OK);
+
 	}
 
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> edit(@PathVariable long id, @RequestBody ExpenseTo newExpense) {
+
 		CustomUserDetails userDetails = getUserDetails();
 		ExpenseDao.editExpense(newExpense, userDetails.getId());
 		return new ResponseEntity<>(HttpStatus.OK);
+
 	}
 
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/details/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ExpenseTo> findById(@PathVariable long id) {
+
 		CustomUserDetails userDetails = getUserDetails();
 		ExpenseTo result = ExpenseDao.findById(id, userDetails.getId());
 		return new ResponseEntity<>(result, HttpStatus.OK);
+
 	}
 
 	private CustomUserDetails getUserDetails() {

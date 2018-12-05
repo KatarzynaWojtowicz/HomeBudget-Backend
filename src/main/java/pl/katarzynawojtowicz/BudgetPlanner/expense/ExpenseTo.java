@@ -11,7 +11,7 @@ public class ExpenseTo {
 	private Float cena;
 	private Status status;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy", timezone = "Europe/Warsaw")
 	private Date dataWydatku;
 
 	public long getId() {

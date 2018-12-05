@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,8 @@ public class ExpenseDao {
 	private static final String DB_URL = "jdbc:mysql://localhost/homebudget";
 	private static final String USER = "user";
 	private static final String PASS = "password";
+
+	private static SimpleDateFormat databaseDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
 	public static List<ExpenseTo> findByParameters(Status searchStatus, String searchKategoria, String searchNazwa,
 			Date dataWydatku,
@@ -62,7 +65,7 @@ public class ExpenseDao {
 			insertParts.add("status = '" + newExpense.getStatus().toString() + "'");
 		}
 		if (newExpense.getDataWydatku() != null) {
-			insertParts.add("data_wydatku = '" + newExpense.getDataWydatku().toString());
+			insertParts.add("data_wydatku = '" + databaseDateFormatter.format(newExpense.getDataWydatku()) + "'");
 		}
 
 		if (insertParts.size() > 0) {
@@ -137,7 +140,7 @@ public class ExpenseDao {
 			whereParts.add("wydatek = '" + searchNazwa + "'");
 		}
 		if (dataWydatku != null) {
-			whereParts.add("data_wydatku = '" + dataWydatku + "'");
+			whereParts.add("data_wydatku = '" + databaseDateFormatter.format(dataWydatku) + "'");
 		}
 		whereParts.add("id_user = " + userId);
 
@@ -164,11 +167,10 @@ public class ExpenseDao {
 				String wydatek = rs.getString("wydatek");
 				String kategoria = rs.getString("kategoria");
 				Float cena = rs.getFloat("cena");
-				String status = rs.getString("status");
-				Status s = Status.valueOf(status);
+				Status status = Status.valueOf(rs.getString("status"));
 				Date dataWydatku = rs.getDate("data_wydatku");
 
-				ExpenseTo newExpense = new ExpenseTo(id, wydatek, kategoria, cena, s, dataWydatku);
+				ExpenseTo newExpense = new ExpenseTo(id, wydatek, kategoria, cena, status, dataWydatku);
 				result.add(newExpense);
 			}
 			rs.close();
@@ -198,7 +200,7 @@ public class ExpenseDao {
 		}
 
 		if (newExpense.getDataWydatku() != null) {
-			insertParts.add("'" + newExpense.getDataWydatku().toString() + "'");
+			insertParts.add("'" + databaseDateFormatter.format(newExpense.getDataWydatku()) + "'");
 		}
 
 		insertParts.add(String.valueOf(userId));
