@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,8 @@ public class ProfitDao {
 	private static final String USER = "user";
 	private static final String PASS = "password";
 
+	private static SimpleDateFormat databaseDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
 	public static void addNewProfit(ProfitTo newProfit, int userId) {
 		String sql = buildInsertSql(newProfit, userId);
 		addProfit(sql);
@@ -24,17 +27,14 @@ public class ProfitDao {
 		String sql = "INSERT INTO profit (nazwa, kwota, data_przychodu, id_user) VALUES (";
 
 		List<String> insertParts = new ArrayList<>();
-		if (newProfit.getNazwa() != null) {
-			insertParts.add("'" + newProfit.getNazwa() + "'");
-		}
-		if (newProfit.getKwota() != null) {
-			insertParts.add(newProfit.getKwota().toString());
-		}
-		if (newProfit.getDataPrzychodu() != null) {
-			insertParts.add(newProfit.getDataPrzychodu().toString());
-		}
-
+		insertParts.add("'" + newProfit.getNazwa() + "'");
+		insertParts.add(newProfit.getKwota().toString());
+		String dateString = newProfit.getDataPrzychodu() != null
+				? databaseDateFormatter.format(newProfit.getDataPrzychodu())
+				: "null";
+		insertParts.add(dateString);
 		insertParts.add(String.valueOf(userId));
+
 		if (insertParts.size() > 0) {
 			String insertString = String.join(", ", insertParts);
 			sql += insertString + ");";
@@ -59,18 +59,21 @@ public class ProfitDao {
 		}
 	}
 
-	public static List<ProfitTo> findByParameters(String searchNazwa, int userId) {
-		String sql = buildSelectSql(searchNazwa, userId);
+	public static List<ProfitTo> findByParameters(String searchNazwa, Date dataPrzychodu, int userId) {
+		String sql = buildSelectSql(searchNazwa, dataPrzychodu, userId);
 		return performSelect(sql);
 	}
 
-	private static String buildSelectSql(String searchNazwa, int userId) {
+	private static String buildSelectSql(String searchNazwa, Date dataPrzychodu, int userId) {
 		String sql = "SELECT id, nazwa, kwota, data_przychodu FROM profit";
 
 		sql += " WHERE id_user = " + userId;
 
 		if (searchNazwa != null) {
-			sql += " AND nazwa = '" + searchNazwa + "'";
+			sql += " AND nazwa LIKE '%" + searchNazwa + "%'";
+		}
+		if (dataPrzychodu != null) {
+			sql += " AND data_przychodu = '" + databaseDateFormatter.format(dataPrzychodu) + "'";
 		}
 
 		return sql;

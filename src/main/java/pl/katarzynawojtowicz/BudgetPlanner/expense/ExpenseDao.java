@@ -137,7 +137,7 @@ public class ExpenseDao {
 			whereParts.add("kategoria = '" + searchKategoria + "'");
 		}
 		if (searchNazwa != null) {
-			whereParts.add("wydatek = '" + searchNazwa + "'");
+			whereParts.add("wydatek LIKE '%" + searchNazwa + "%'");
 		}
 		if (dataWydatku != null) {
 			whereParts.add("data_wydatku = '" + databaseDateFormatter.format(dataWydatku) + "'");

@@ -32,7 +32,7 @@ public class SummaryRestController {
 	public ResponseEntity<List<MonthSummaryTo>> getMonthlySummary() {
 
 		CustomUserDetails userDetails = getUserDetails();
-		List<ProfitTo> profits = ProfitDao.findByParameters(null, userDetails.getId());
+		List<ProfitTo> profits = ProfitDao.findByParameters(null, null, userDetails.getId());
 		List<ExpenseTo> expenses = ExpenseDao.findByParameters(null, null, null, null,
 				userDetails.getId());
 
