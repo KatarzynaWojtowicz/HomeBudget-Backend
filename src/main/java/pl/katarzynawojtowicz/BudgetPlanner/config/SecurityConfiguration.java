@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 
 import pl.katarzynawojtowicz.BudgetPlanner.repository.UserRepository;
 import pl.katarzynawojtowicz.BudgetPlanner.service.CustomUserDetailsService;
@@ -31,11 +32,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
 		http.csrf().disable();
+		http.exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
 		http.authorizeRequests()
-				.antMatchers("**/secured/**").authenticated()
-				.anyRequest().permitAll()
+				.antMatchers("**/secured/**").authenticated().anyRequest().permitAll()
 				.and()
 				.formLogin().permitAll();
 	}
