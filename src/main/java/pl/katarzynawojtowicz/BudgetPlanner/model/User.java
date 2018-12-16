@@ -35,8 +35,11 @@ public class User {
 	@Column(name = "last_name")
 	private String lastName;
 
+	@Column(name = "login")
+	private String username;
+
 	@Column(name = "active")
-	private boolean active;;
+	private boolean active;
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_role"))
@@ -84,6 +87,14 @@ public class User {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public boolean isActive() {

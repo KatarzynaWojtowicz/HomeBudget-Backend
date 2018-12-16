@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.katarzynawojtowicz.BudgetPlanner.model.CustomUserDetails;
 
 @RestController
-@RequestMapping("/expense")
+@RequestMapping("/api/expense")
 public class ExpenseRestController {
 
 	@PreAuthorize("isAuthenticated()")

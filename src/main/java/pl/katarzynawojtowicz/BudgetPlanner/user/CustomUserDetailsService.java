@@ -1,4 +1,4 @@
-package pl.katarzynawojtowicz.BudgetPlanner.service;
+package pl.katarzynawojtowicz.BudgetPlanner.user;
 
 import java.util.Optional;
 
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import pl.katarzynawojtowicz.BudgetPlanner.model.CustomUserDetails;
 import pl.katarzynawojtowicz.BudgetPlanner.model.User;
-import pl.katarzynawojtowicz.BudgetPlanner.repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -20,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<User> optionalUsers = userRepository.findByName(username);
+		Optional<User> optionalUsers = userRepository.findByUsername(username);
 
 		optionalUsers
 				.orElseThrow(() -> new UsernameNotFoundException("Username not found"));

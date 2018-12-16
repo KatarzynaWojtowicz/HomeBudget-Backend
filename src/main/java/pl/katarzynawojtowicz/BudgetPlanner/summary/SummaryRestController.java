@@ -22,7 +22,7 @@ import pl.katarzynawojtowicz.BudgetPlanner.profit.ProfitDao;
 import pl.katarzynawojtowicz.BudgetPlanner.profit.ProfitTo;
 
 @RestController
-@RequestMapping("/summary")
+@RequestMapping("/api/summary")
 public class SummaryRestController {
 
 	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM.yyyy");
