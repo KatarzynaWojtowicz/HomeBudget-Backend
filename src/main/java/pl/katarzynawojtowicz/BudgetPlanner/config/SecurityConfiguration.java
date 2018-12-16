@@ -19,6 +19,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -69,8 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		});
 
 		http.authorizeRequests()
-				.antMatchers("/api/**").authenticated()
-				.anyRequest().authenticated()
+				.antMatchers("/api/**").authenticated().anyRequest().authenticated()
 				.antMatchers("/public/**").anonymous().anyRequest().permitAll()
 
 				.and()
@@ -85,7 +85,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.logoutUrl("/public/logout")
 				.deleteCookies("JSESSIONID")
 				.invalidateHttpSession(true)
-				.logoutSuccessUrl("/")
+				.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
 				.permitAll();
 	}
 
