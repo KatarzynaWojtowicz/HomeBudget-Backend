@@ -14,11 +14,19 @@ public class UserDao {
 	private static final String PASS = "password";
 
 	public static void addNewUser(RegisterTo newRegister) {
-		String sql = buildInsertSql(newRegister);
-		addUser(sql);
+		String insertUserSql = buildInsertUserSql(newRegister);
+		executeInsertSql(insertUserSql);
+
+		String insertUserRoleSql = buildInsertUserRoleSql(newRegister.getLogin());
+		executeInsertSql(insertUserRoleSql);
 	}
 
-	private static String buildInsertSql(RegisterTo newRegister) {
+	private static String buildInsertUserRoleSql(String login) {
+		return "INSERT INTO user_role (id_user, id_role) VALUES ((SELECT id FROM user WHERE login = '" + login
+				+ "'), (SELECT id FROM role WHERE role = 'USER'))";
+	}
+
+	private static String buildInsertUserSql(RegisterTo newRegister) {
 		String sql = "INSERT INTO user (active, name, last_name, login, password, email) VALUES (true, ";
 
 		List<String> insertParts = new ArrayList<>();
@@ -45,7 +53,7 @@ public class UserDao {
 		return sql;
 	}
 
-	private static void addUser(String sql) {
+	private static void executeInsertSql(String sql) {
 		Connection conn = null;
 		Statement stmt = null;
 		try {
