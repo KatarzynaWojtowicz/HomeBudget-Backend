@@ -92,7 +92,7 @@ public class ExpenseDao {
 	}
 
 	public static ExpenseTo findById(Long id, int userId) {
-		String sql = "SELECT * FROM expense WHERE id = " + id + "' AND id_user = " + userId + ");";
+		String sql = "SELECT * FROM expense WHERE id = " + id + " AND id_user = " + userId + ";";
 		Connection conn = null;
 		Statement stmt = null;
 		try {

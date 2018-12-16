@@ -8,7 +8,7 @@ public class ProfitTo {
 	private long idprofit;
 	private String nazwa;
 	private Float kwota;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy", timezone = "Europe/Warsaw")
 	private Date dataPrzychodu;
 
 	public long getIdprofit() {

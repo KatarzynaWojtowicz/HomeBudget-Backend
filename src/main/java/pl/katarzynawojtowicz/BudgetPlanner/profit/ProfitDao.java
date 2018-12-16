@@ -109,7 +109,7 @@ public class ProfitDao {
 	}
 
 	public static void removeProfit(long id, int userId) {
-		String sql = "DELETE FROM profit WHERE id = " + id + " WHERE id_user = " + userId;
+		String sql = "DELETE FROM profit WHERE id = " + id + " AND id_user = " + userId;
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -139,7 +139,7 @@ public class ProfitDao {
 		}
 
 		if (newProfit.getDataPrzychodu() != null) {
-			insertParts.add("data_przychodu = '" + newProfit.getDataPrzychodu().toString());
+			insertParts.add("data_przychodu = '" + databaseDateFormatter.format(newProfit.getDataPrzychodu()) + "'");
 		}
 
 		if (insertParts.size() > 0) {
@@ -166,7 +166,7 @@ public class ProfitDao {
 	}
 
 	public static ProfitTo findById(long id, int userId) {
-		String sql = "SELECT * FROM profit WHERE id = " + id + " AND id_user = " + userId + ")";
+		String sql = "SELECT * FROM profit WHERE id = " + id + " AND id_user = " + userId + ";";
 		Connection conn = null;
 		Statement stmt = null;
 		try {
