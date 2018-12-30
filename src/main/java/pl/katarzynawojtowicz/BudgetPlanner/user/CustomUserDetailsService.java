@@ -8,9 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import pl.katarzynawojtowicz.BudgetPlanner.model.CustomUserDetails;
-import pl.katarzynawojtowicz.BudgetPlanner.model.User;
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

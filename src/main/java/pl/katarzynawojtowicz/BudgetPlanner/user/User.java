@@ -1,4 +1,4 @@
-package pl.katarzynawojtowicz.BudgetPlanner.model;
+package pl.katarzynawojtowicz.BudgetPlanner.user;
 
 import java.util.Set;
 
