@@ -27,7 +27,7 @@ public class ProfitRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void addNewProfit(@RequestBody ProfitTo newProfit) {
-		addNewProfit(newProfit);
+		profitService.addNewProfit(newProfit);
 
 	}
 
@@ -46,14 +46,14 @@ public class ProfitRestController {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public void remove(@PathVariable long id) {
-		remove(id);
+		profitService.remove(id);
 	}
 
 	@PreAuthorize("isAuthenticated()")
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void edit(@PathVariable long id, @RequestBody ProfitTo newProfit) {
-		edit(id, newProfit);
+		profitService.edit(id, newProfit);
 	}
 
 	@PreAuthorize("isAuthenticated()")

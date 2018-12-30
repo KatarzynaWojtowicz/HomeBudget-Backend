@@ -39,22 +39,22 @@ public class ExpenseRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void addNewExpense(@RequestBody ExpenseTo newExpense) {
-		addNewExpense(newExpense);
+		expenseService.addNewExpense(newExpense);
 	}
 
 	@PreAuthorize("isAuthenticated()")
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public void remove(@PathVariable long id) {
-		remove(id);
+		expenseService.remove(id);
 
 	}
 
 	@PreAuthorize("isAuthenticated()")
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public void edit(@PathVariable long id, @RequestBody ExpenseTo newExpense) {
-		edit(id, newExpense);
+		expenseService.edit(id, newExpense);
 	}
 
 	@PreAuthorize("isAuthenticated()")

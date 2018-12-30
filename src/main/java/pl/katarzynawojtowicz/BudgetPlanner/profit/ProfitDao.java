@@ -30,7 +30,7 @@ public class ProfitDao {
 		insertParts.add("'" + newProfit.getNazwa() + "'");
 		insertParts.add(newProfit.getKwota().toString());
 		String dateString = newProfit.getDataPrzychodu() != null
-				? databaseDateFormatter.format(newProfit.getDataPrzychodu())
+				? "'" + databaseDateFormatter.format(newProfit.getDataPrzychodu()) + "'"
 				: "null";
 		insertParts.add(dateString);
 		insertParts.add(String.valueOf(userId));

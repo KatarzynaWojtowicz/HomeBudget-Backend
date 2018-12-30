@@ -20,8 +20,10 @@ public class CustomCorsFilter extends CorsFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost");
-		response.setHeader("Access-Control-Allow-Methods", "*");
-		response.setHeader("Access-Control-Allow-Headers", "*");
+		response.setHeader("Access-Control-Allow-Methods", "HEAD, GET, PUT, POST, DELETE, PATCH");
+		response.setHeader("Access-Control-Allow-Headers", "User-Agent,Referer,Origin,Host,Connection,"
+				+ "Access-Control-Request-Method,Access-Control-Request-Headers,Cache-Control,Origin,"
+				+ "X-Requested-With,Content-Type,content-type,Accept,Accept-Encoding,Accept-Language");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		super.doFilterInternal(request, response, filterChain);
 	}

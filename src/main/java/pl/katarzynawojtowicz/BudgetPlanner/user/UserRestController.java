@@ -1,5 +1,6 @@
 package pl.katarzynawojtowicz.BudgetPlanner.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,9 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/public/user")
 public class UserRestController {
 
+	@Autowired
+	private UserService userService;
+
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void addNewUser(@RequestBody RegisterTo newRegister) {
-		addNewUser(newRegister);
+		userService.addNewUser(newRegister);
 	}
 }
