@@ -1,4 +1,6 @@
 /target/
+/bin/
+/test-output/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
