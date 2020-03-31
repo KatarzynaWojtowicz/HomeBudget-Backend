@@ -17,7 +17,6 @@ public class HomePage {
 
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
-//		new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.id("logo")));
 		PageFactory.initElements(driver, this);
 	}
 

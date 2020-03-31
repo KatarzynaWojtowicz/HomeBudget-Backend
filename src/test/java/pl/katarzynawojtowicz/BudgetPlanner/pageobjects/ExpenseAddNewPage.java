@@ -38,8 +38,6 @@ public class ExpenseAddNewPage {
 
 	public ExpenseAddNewPage(WebDriver driver) {
 		this.driver = driver;
-//		new WebDriverWait(driver, 30)
-//				.until(ExpectedConditions.presenceOfElementLocated(By.id("nowy-wydatek-nazwa-input")));
 		PageFactory.initElements(driver, this);
 	}
 

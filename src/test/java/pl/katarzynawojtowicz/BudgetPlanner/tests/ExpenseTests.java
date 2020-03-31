@@ -36,4 +36,21 @@ public class ExpenseTests extends AbstractBaseTest {
 		Assert.assertTrue(expenseAddNewPage.okAllertIsDisplayed());
 	}
 
+	@Test
+	public void positiveDeleteExpense() {
+		HomePage homePage = new HomePage(driver);
+		homePage.pressLoginLink();
+
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.loginWithCredentials(CORRECT_LOGIN, CORRECT_PASSWORD);
+		ExpenseSearchListPage expenseSearchPage = new ExpenseSearchListPage(driver);
+
+		String firstIdBeforeDelete = expenseSearchPage.getFirstId();
+		expenseSearchPage.markFirstExpense();
+		expenseSearchPage.deleteExpense();
+		String firstIdAfterDelete = expenseSearchPage.getFirstId();
+
+		Assert.assertNotEquals(firstIdBeforeDelete, firstIdAfterDelete);
+	}
+
 }
