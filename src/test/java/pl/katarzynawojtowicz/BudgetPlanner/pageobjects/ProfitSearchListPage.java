@@ -39,7 +39,7 @@ public class ProfitSearchListPage {
 	}
 	
 	public void editProfit() {
-		deleteButton.click();
+		editButton.click();
 		DriverUtils.waitForAjaxToFinish(driver);
 	}
 }
