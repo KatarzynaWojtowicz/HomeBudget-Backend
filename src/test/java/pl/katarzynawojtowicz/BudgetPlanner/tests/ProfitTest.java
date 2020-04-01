@@ -1,9 +1,11 @@
 package pl.katarzynawojtowicz.BudgetPlanner.tests;
 
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import pl.katarzynawojtowicz.BudgetPlanner.config.DriverUtils;
+import pl.katarzynawojtowicz.BudgetPlanner.pageobjects.EditProfitPage;
 import pl.katarzynawojtowicz.BudgetPlanner.pageobjects.ExpenseSearchListPage;
 import pl.katarzynawojtowicz.BudgetPlanner.pageobjects.HomePage;
 import pl.katarzynawojtowicz.BudgetPlanner.pageobjects.LoginPage;
@@ -69,6 +71,10 @@ public class ProfitTest extends AbstractBaseTest {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.loginWithCredentials(CORRECT_LOGIN, CORRECT_PASSWORD);
 		
+		ExpenseSearchListPage expenseSearchListPage = new ExpenseSearchListPage(driver);
+		expenseSearchListPage.goToProfitSearchListPage();
+		
+		
 		ProfitSearchListPage profitSearchPage = new ProfitSearchListPage(driver);
 		
 		TablePage profitList = profitSearchPage.getProfitList();
@@ -80,5 +86,29 @@ public class ProfitTest extends AbstractBaseTest {
 		
 		Assert.assertNotEquals(firstIdBeforeDelete, firstIdAfterDelete);
 	}
+	
+	
+	@Test 
+	public void positiveEditProfit() {
+		HomePage homePage = new HomePage(driver);
+		homePage.pressLoginLink();
+
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.loginWithCredentials(CORRECT_LOGIN, CORRECT_PASSWORD);
+		
+		ProfitSearchListPage profitSearchPage = new ProfitSearchListPage(driver);
+		
+		TablePage profitList = profitSearchPage.getProfitList();
+		String profitNameBeforeEdit = profitList.getCellText(0, 0);
+		profitList.clickOnRow(0);
+		profitSearchPage.editProfit();
+
+		EditProfitPage editProfilPage = new EditProfitPage(driver);
+		
+		Assert.assertNotNull(driver.findElement(By.xpath("/html/body/div[2]/div[3]/div[1]/div/div[2]")).getAttribute("readonly"));
+		
+		
+	}
+	
 	
 }

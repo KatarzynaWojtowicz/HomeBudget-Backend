@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import pl.katarzynawojtowicz.BudgetPlanner.config.DriverUtils;
 
@@ -22,8 +23,9 @@ public class ProfitSearchListPage {
 	public ProfitSearchListPage(WebDriver driver) {
 		super();
 		this.driver = driver;
+		PageFactory.initElements(driver, this);
 
-		profitList = new TablePage(driver, "expenses-table_wrapper");
+		profitList = new TablePage(driver, "profit-table_wrapper");
 	}
 
 	public TablePage getProfitList() {
@@ -33,6 +35,11 @@ public class ProfitSearchListPage {
 	public void deleteProfit() {
 	//	deleteButton.click();
 		driver.findElement(By.id( "delete-button")).click();
+		DriverUtils.waitForAjaxToFinish(driver);
+	}
+	
+	public void editProfit() {
+		deleteButton.click();
 		DriverUtils.waitForAjaxToFinish(driver);
 	}
 }
