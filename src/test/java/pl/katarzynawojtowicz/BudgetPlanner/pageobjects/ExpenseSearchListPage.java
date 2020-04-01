@@ -11,12 +11,18 @@ public class ExpenseSearchListPage {
 
 	@FindBy(xpath = "//*[@id=\"navbarNav\"]/ul[1]/li[2]/a")
 	private WebElement addNewExpenseButton;
+	
+	@FindBy(xpath="//*[@id=\"navbarNav\"]/ul[1]/li[3]/a")
+	private WebElement profits;
 
 	@FindBy(id = "delete-button")
 	private WebElement deleteButton;
 
-	@FindBy(id = "edit_button")
+	@FindBy(id = "edit-button")
 	private WebElement editButton;
+	
+	@FindBy(xpath="//*[@id=\"navbarNav\"]/ul[1]/li[4]/a")
+	private WebElement addNewProfit;
 
 	private TablePage expenseList;
 
@@ -44,6 +50,14 @@ public class ExpenseSearchListPage {
 
 	public TablePage getExpenseList() {
 		return expenseList;
+	}
+	
+	public void goToProfitAddNewPage() {
+		addNewProfit.click();
+	}
+	
+	public void goToProfitSearchListPage() {
+		profits.click();
 	}
 
 }
